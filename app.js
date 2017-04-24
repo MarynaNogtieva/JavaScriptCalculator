@@ -1,3 +1,4 @@
+"use strict"
 var operation,
 	zero;
 
@@ -20,30 +21,54 @@ function clearAll(){
 
 }
 
+function getTotal(val){
+result.innerHTML = eval(val);
+historyRes.innerHTML += eval(val);
+}
+
+function updateResult(val){
+		if(result.innerHTML === "0" && val !=="."){
+        	result.innerHTML = "";
+        }
+       		 result.innerHTML +=val;
+}
+
+function upadteHistory(val){
+		if(historyRes.innerHTML === "0" && val !=="."){
+        	historyRes.innerHTML = "";
+       	 }
+
+        historyRes.innerHTML += val;
+}
+
+
+
 // get number value to the result, without displaying operations
 for(var i = 0; i <numbersAmount;i++){
 	numbers[i].addEventListener("click",function(e){
-        if(result.innerHTML === "0"){
-        	result.innerHTML = "";
-        }
-        result.innerHTML +=e.target.value;
+		var currentValue = e.target.value;
+		updateResult(currentValue);
+        
 	},false);
 }
 
 // get all calues to display input history (including operations)
 for(var j = 0; j < allInputsAmount; j++){
 	allInputs[j].addEventListener("click",function(e){
-		
-		 if(historyRes.innerHTML === "0"){
-        	historyRes.innerHTML = "";
-       	 }
-
-        historyRes.innerHTML += e.target.value;
+		var currentValue = e.target.value;
+		upadteHistory(currentValue);
+		 
        
          if(e.target.value === "clear"){
         		clearAll();
         }
-	
+	     else if(e.target.value === "="){
+             // getTotal(historyRes.innerHTML);
+             //get expression without = sigh
+             var expression = historyRes.innerHTML.substr(0,historyRes.innerHTML.length-1);
+             //pass expression value to get result
+             getTotal(expression);
+	      }
        
 	},false);
 }
