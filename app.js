@@ -2,6 +2,9 @@
 var operation,
 	zero;
 
+//operators for validation without .
+var operators1 = ["+","-","/","*"];
+
 var result = document.getElementById("result");
 var historyRes = document.getElementById("historyResult");
 
@@ -30,7 +33,17 @@ function updateResult(val){
 		if(result.innerHTML === "0" && val !=="."){
         	result.innerHTML = "";
         }
-       		 result.innerHTML +=val;
+        //last carachter of the history
+        var historyLastCharIndex = historyRes.innerHTML.length - 1;
+        //check if validation operators have operator
+        //if yes, update result to a new value
+        if(operators1.includes(historyRes.innerHTML.charAt(historyLastCharIndex))){
+        	result.innerHTML =val;
+        }
+        else{
+        	result.innerHTML +=val;
+        }
+       		 
 }
 
 function upadteHistory(val){
@@ -38,7 +51,17 @@ function upadteHistory(val){
         	historyRes.innerHTML = "";
        	 }
 
-        historyRes.innerHTML += val;
+ //last carachter of the history
+        var historyLastCharIndex = historyRes.innerHTML.length - 1;
+        //check if validation operators have operator
+        //if yes, update result to a new value
+        if(operators1.includes(historyRes.innerHTML.charAt(historyLastCharIndex)) && (val==="=" || val==="+" || val==="-" || val === "*" || val === "/")){
+        	console.log("cannot duplicate operator rightaway");
+        }
+        else{
+            historyRes.innerHTML += val;
+        }
+    
 }
 
 
