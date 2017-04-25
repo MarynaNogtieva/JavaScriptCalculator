@@ -1,7 +1,5 @@
 "use strict"
-var operation,
-	zero;
-
+var isEqualPressed = false;
 //operators for validation without .
 var operators1 = ["+","-","/","*"];
 
@@ -29,6 +27,7 @@ function clearAll(){
 function getTotal(val){
 result.innerHTML = eval(val);
 historyRes.innerHTML += eval(val);
+isEqualPressed = true;
 }
 
 function updateResult(val){
@@ -46,7 +45,15 @@ function updateResult(val){
         	console.log("cannot duplicate operator rightaway");
         }
         else{
-        	result.innerHTML +=val;
+        		if(isEqualPressed)
+           	{
+           		result.innerHTML = val;
+
+           	}
+           	else{
+           		result.innerHTML +=val;
+           	}
+        	
         }
        		 
 }
@@ -76,9 +83,16 @@ function upadteHistory(val){
               console.log("cannot start with sigh");
               	historyRes.innerHTML = "0";
          	}
-           else{ 
-           	historyRes.innerHTML += val;
 
+           else{ 
+           	if(isEqualPressed)
+           	{
+           		historyRes.innerHTML = val;
+           	}
+           	else{
+           		historyRes.innerHTML += val;
+           	}
+           
            }
         }
     
@@ -113,6 +127,9 @@ for(var j = 0; j < allInputsAmount; j++){
              var expression = historyRes.innerHTML.substr(0,historyRes.innerHTML.length-1);
              //pass expression value to get result
              getTotal(expression);
+	      }
+	      else{
+	      	isEqualPressed = false;
 	      }
        
 	},false);
