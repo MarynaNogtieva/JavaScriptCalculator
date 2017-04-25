@@ -5,6 +5,8 @@ var operation,
 //operators for validation without .
 var operators1 = ["+","-","/","*"];
 
+var operators2 = ["."];
+
 var result = document.getElementById("result");
 var historyRes = document.getElementById("historyResult");
 
@@ -40,6 +42,9 @@ function updateResult(val){
         if(operators1.includes(historyRes.innerHTML.charAt(historyLastCharIndex))){
         	result.innerHTML =val;
         }
+         else if(operators2.includes(historyRes.innerHTML.charAt(historyLastCharIndex)) && val === "."){
+        	console.log("cannot duplicate operator rightaway");
+        }
         else{
         	result.innerHTML +=val;
         }
@@ -47,19 +52,34 @@ function updateResult(val){
 }
 
 function upadteHistory(val){
-		if(historyRes.innerHTML === "0" && val !=="."){
+
+		if(historyRes.innerHTML === "0" && val !=="." && operators1.includes(val) === false){
         	historyRes.innerHTML = "";
        	 }
-
- //last carachter of the history
+        
+//last carachter of the history
         var historyLastCharIndex = historyRes.innerHTML.length - 1;
+        
+
         //check if validation operators have operator
         //if yes, update result to a new value
-        if(operators1.includes(historyRes.innerHTML.charAt(historyLastCharIndex)) && (val==="=" || val==="+" || val==="-" || val === "*" || val === "/")){
+        if(operators1.includes(historyRes.innerHTML.charAt(historyLastCharIndex)) && (val==="=" || val==="+" || val==="-" || val === "*" || val === "/")  ){
         	console.log("cannot duplicate operator rightaway");
         }
+        else if(operators2.includes(historyRes.innerHTML.charAt(historyLastCharIndex)) && val === "."){
+        	console.log("cannot duplicate operator rightaway");
+        }
+
         else{
-            historyRes.innerHTML += val;
+        	 //make shure that first thing updated is number and not sign
+        	 if( operators1.includes(val) && historyRes.innerHTML === "0"){
+              console.log("cannot start with sigh");
+              	historyRes.innerHTML = "0";
+         	}
+           else{ 
+           	historyRes.innerHTML += val;
+
+           }
         }
     
 }
@@ -70,6 +90,8 @@ function upadteHistory(val){
 for(var i = 0; i <numbersAmount;i++){
 	numbers[i].addEventListener("click",function(e){
 		var currentValue = e.target.value;
+
+
 		updateResult(currentValue);
         
 	},false);
