@@ -25,9 +25,15 @@ function clearAll(){
 }
 
 function getTotal(val){
-result.innerHTML = eval(val);
-historyRes.innerHTML += eval(val);
-isEqualPressed = true;
+	if(val !== ""){
+		result.innerHTML = eval(val);
+		historyRes.innerHTML += eval(val);
+		isEqualPressed = true;
+	}
+	else{
+		historyRes.innerHTML = "0";
+	}
+
 }
 
 function updateResult(val){
@@ -126,8 +132,10 @@ for(var j = 0; j < allInputsAmount; j++){
              // getTotal(historyRes.innerHTML);
              //get expression without = sigh
              var expression = historyRes.innerHTML.substr(0,historyRes.innerHTML.length-1);
+             console.log(expression);
+
              //pass expression value to get result
-             getTotal(expression);
+            getTotal(expression);
 	      }
 	      else{
 	      	isEqualPressed = false;
