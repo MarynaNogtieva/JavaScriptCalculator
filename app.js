@@ -59,12 +59,12 @@ function updateResult(val){
 }
 
 function upadteHistory(val){
-
+         ///debugger;
 		if(historyRes.innerHTML === "0" && val !=="." && operators1.includes(val) === false){
         	historyRes.innerHTML = "";
        	 }
         
-//last carachter of the history
+		//last carachter of the history
         var historyLastCharIndex = historyRes.innerHTML.length - 1;
         
 
@@ -80,8 +80,9 @@ function upadteHistory(val){
         else{
         	 //make shure that first thing updated is number and not sign
         	 if( operators1.includes(val) && historyRes.innerHTML === "0"){
-              console.log("cannot start with sigh");
-              	historyRes.innerHTML = "0";
+             //console.log("cannot start with sigh");
+              	//historyRes.innerHTML = "0";
+              	historyRes.innerHTML += val;
          	}
 
            else{ 
