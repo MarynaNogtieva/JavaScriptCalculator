@@ -1,5 +1,6 @@
 "use strict"
 var isEqualPressed = false;
+var isNegative = false;
 //operators for validation without .
 var operators1 = ["+","-","/","*"];
 
@@ -47,18 +48,20 @@ function updateResult(val){
         if(operators1.includes(historyRes.innerHTML.charAt(historyLastCharIndex))){
         	result.innerHTML =val;
         }
-         else if(operators2.includes(historyRes.innerHTML.charAt(historyLastCharIndex)) && val === "."){
+         else if(val === "." && historyRes.innerHTML.indexOf(".") !== -1){
         	console.log("cannot duplicate operator rightaway");
         }
+
         else{
         		if(isEqualPressed)
-           	{
-           		result.innerHTML = val;
+	           	{
+	           		result.innerHTML = val;
 
-           	}
-           	else{
-           		result.innerHTML +=val;
-           	}
+	           	}
+
+	           	else{
+	           		result.innerHTML +=val;
+	           	}
         	
         }
        		 
@@ -79,7 +82,7 @@ function upadteHistory(val){
         if(operators1.includes(historyRes.innerHTML.charAt(historyLastCharIndex)) && (val==="=" || val==="+" || val==="-" || val === "*" || val === "/")  ){
         	console.log("cannot duplicate operator rightaway");
         }
-        else if(operators2.includes(historyRes.innerHTML.charAt(historyLastCharIndex)) && val === "."){
+        else if( val === "."  && historyRes.innerHTML.indexOf(".") !== -1){
         	console.log("cannot duplicate operator rightaway");
         }
 
@@ -96,6 +99,17 @@ function upadteHistory(val){
            	{
            		historyRes.innerHTML = val;
            	}
+           	else if(val === "negative"){
+        	   //check if there is negative sign initially, then change it on the opposite
+        	   if(isNegative){
+        	   	 historyRes.innerHTML = historyRes.innerHTML.splice(0,1);
+        	   	 isNegative = false;
+        	   }
+        	   else{
+        	   	historyRes.innerHTML = "-"+historyRes.innerHTML;
+        	   }
+             }
+
            	else{
            		historyRes.innerHTML += val;
            	}
@@ -137,8 +151,12 @@ for(var j = 0; j < allInputsAmount; j++){
              //pass expression value to get result
             getTotal(expression);
 	      }
+	      else if(e.target.value === "negative"){
+	      	isNegative = true;
+	      }
 	      else{
 	      	isEqualPressed = false;
+	      	isNegative = false;
 	      }
        
 	},false);
